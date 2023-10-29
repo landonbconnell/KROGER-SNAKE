@@ -12,6 +12,3 @@ let floorNodes: FloorNode = {
   category: null,
   neighbors: null,
 };
-
-let num_aisles = 3;
-let num_bays = 4;
