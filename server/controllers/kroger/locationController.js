@@ -22,39 +22,8 @@ const getLocations = async (req, res) => {
   }
 };
 
-async function getClosestKrogerLocations(accessToken, latitude, longitude, count = 3) {
-  const BASE_URL = "https://api.kroger.com/v1/locations";
-  const headers = {
-      "Authorization": `Bearer ${accessToken}`
-  };
-  const params = new URLSearchParams({
-      latitude: latitude,
-      longitude: longitude,
-      chain: "KROGER",
-      limit: count
-  });
 
-  try {
-      const response = await fetch(`${BASE_URL}?${params}`, { headers: headers });
-      
-      if (!response.ok) {
-          throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
-      }
 
-      const data = await response.json();
-      return data.data;
-  } catch (error) {
-      console.error("Error fetching Kroger locations:", error);
-      return [];
-  }
-}
+module.exports = { getLocations };
 
-module.exports = { getLocations, getClosestKrogerLocations };
-
-// Example usage:
-// (async () => {
-//     const accessToken = "YOUR_OBTAINED_ACCESS_TOKEN"; // Replace with the actual access token you obtain
-//     const closestLocations = await getClosestKrogerLocations(accessToken, 40.7128, -74.0060); // For New York City
-//     console.log(closestLocations);
-// })();
 
