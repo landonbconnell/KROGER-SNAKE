@@ -1,8 +1,7 @@
-const axios = require('axios');
-const Ingredient = require('../../models/ingredientSchema');
+const axios = require("axios");
 const {
   getAccessToken,
-} = require('../../services/kroger/refreshKrogerAccessToken');
+} = require("../../services/kroger/refreshKrogerAccessToken");
 
 const kroger_api_url = process.env.KROGER_API_URL;
 
@@ -11,12 +10,12 @@ const searchByTerm = async (req, res) => {
   try {
     const { data } = await axios.get(`${kroger_api_url}/products`, {
       headers: {
-        Accept: 'application/json',
+        Accept: "application/json",
         Authorization: `Bearer ${access_token}`,
       },
       params: {
-        'filter.term': req.params.term,
-        'filter.locationId': process.env.OUR_KROGER_STORE_ID,
+        "filter.term": req.params.term,
+        "filter.locationId": process.env.OUR_KROGER_STORE_ID,
       },
     });
 
@@ -50,11 +49,11 @@ const getProductById = async (req, res) => {
       `${kroger_api_url}/products/${req.params.id}`,
       {
         headers: {
-          Accept: 'application/json',
+          Accept: "application/json",
           Authorization: `Bearer ${access_token}`,
         },
         params: {
-          'filter.locationId': process.env.OUR_KROGER_STORE_ID,
+          "filter.locationId": process.env.OUR_KROGER_STORE_ID,
         },
       }
     );
@@ -66,34 +65,12 @@ const getProductById = async (req, res) => {
   }
 };
 
-const setPreferredProducts = async (req, res) => {
-  try {
-    const { name, products } = req.body;
-    const existingIngredient = await Ingredient.findOne({ name: name });
-
-    if (existingIngredient) {
-      existingIngredient.productIds = products;
-      await existingIngredient.save();
-      res.status(200).json({ message: 'Ingredient updated' });
-    } else {
-      const newIngredient = new Ingredient({
-        name: name,
-        productIds: products,
-      });
-      await newIngredient.save();
-      res.status(200).json({ message: 'Ingredient created' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.toString() });
-  }
-};
-
 const parseProductData = (currentProduct) => {
   id = currentProduct.productId;
   description = currentProduct.description;
   image = currentProduct.images
-    .find((image) => image.perspective === 'front')
-    .sizes.find((size) => size.size === 'large').url;
+    .find((image) => image.perspective === "front")
+    .sizes.find((size) => size.size === "large").url;
   inventory = currentProduct.items[0].inventory?.stockLevel;
   fulfillment = currentProduct.items[0].fulfillment;
   price = currentProduct.items[0].price;
