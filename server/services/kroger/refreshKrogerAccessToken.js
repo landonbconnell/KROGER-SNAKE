@@ -1,5 +1,5 @@
-const axios = require('axios');
-const base64 = require('base-64');
+const axios = require("axios");
+const base64 = require("base-64");
 
 const client_id = process.env.KROGER_CLIENT_ID;
 const client_secret = process.env.KROGER_CLIENT_SECRET;
@@ -10,12 +10,12 @@ const refreshKrogerAccessToken = async () => {
   try {
     const { data } = await axios.post(
       `${kroger_api_url}/connect/oauth2/token`,
-      'grant_type=client_credentials&scope=product.compact',
+      "grant_type=client_credentials&scope=product.compact",
       {
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          "Content-Type": "application/x-www-form-urlencoded",
           Authorization: `Basic ${base64.encode(
-            client_id + ':' + client_secret
+            client_id + ":" + client_secret
           )}`,
         },
       }
@@ -30,7 +30,7 @@ const refreshKrogerAccessToken = async () => {
       (expires_in - 60) * 1000
     );
 
-    console.log('client_credentials access token retrieved');
+    console.log("client_credentials access token retrieved");
   } catch (err) {
     console.log(err);
   }

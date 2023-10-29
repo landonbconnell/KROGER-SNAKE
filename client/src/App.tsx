@@ -4,8 +4,6 @@ import IngredientsPage from "components/ingredients/IngredientsPage";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@emotion/react";
 import "./styles/App.css";
-import RecipesPage from "components/recipes/RecipesPage";
-import CakeCostsPage from "components/cakeCosts/CakeCostsPage";
 import Helmet from "react-helmet";
 
 const theme = createTheme({
@@ -56,7 +54,7 @@ const App = () => {
     <div className="application">
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Nicole's Tools</title>
+        <title>AisleSnake</title>
         <link rel="canonical" href={process.env.REACT_APP_CLIENT_URL} />
       </Helmet>
 
@@ -64,15 +62,10 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <Routes>
           <Route path="/" element={<IngredientsPage />} />
-          <Route path="/ingredients" element={<IngredientsPage />} />
-          <Route path="/recipes" element={<RecipesPage />} />
-          <Route path="/cake-costs" element={<CakeCostsPage />} />
         </Routes>
       </ThemeProvider>
     </div>
   );
 };
-
-//test
 
 export default App;
