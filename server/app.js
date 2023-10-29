@@ -1,18 +1,18 @@
-const express = require('express');
-require('dotenv').config();
-const dbConnect = require('./config/db');
-const cors = require('cors');
-const apiRoutes = require('./routes/apiRoutes');
+const express = require("express");
+require("dotenv").config();
+// const dbConnect = require('./config/db');
+const cors = require("cors");
+const apiRoutes = require("./routes/apiRoutes");
 const {
   refreshKrogerAccessToken,
-} = require('./services/kroger/refreshKrogerAccessToken');
+} = require("./services/kroger/refreshKrogerAccessToken");
 
 const app = express();
 
 // Retrieves all access tokens and refreshes it before expiring
 refreshKrogerAccessToken();
 
-dbConnect().catch((err) => console.log(err));
+//dbConnect().catch((err) => console.log(err));
 
 const port = 5000;
 
@@ -28,4 +28,4 @@ app.use(
 
 app.use(express.json());
 
-app.use('/api', apiRoutes);
+app.use("/api", apiRoutes);
